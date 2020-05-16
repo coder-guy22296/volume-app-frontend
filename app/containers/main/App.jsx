@@ -5,7 +5,6 @@ import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
 import { API } from './config';
 
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
