@@ -4,6 +4,7 @@ import './App.css';
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
+import { API } from './config';
 
 export const API = 'http://10.0.0.227:4000';
 
@@ -122,7 +123,7 @@ function App() {
                         src="/docs/4.4/assets/brand/bootstrap-solid.svg"
                         width="30"
                         height="30"
-                        class="d-inline-block align-top"
+                        className="d-inline-block align-top"
                         alt=""
                     />
                     Beta
@@ -142,6 +143,7 @@ function App() {
                         <VolumeGroupControls fetchGroups={fetchGroups} />
                     </div>
                     <div className="col-8 d-flex flex-column align-items-start">
+                        {/* Volume Group Details */}
                         {selectedGroup && (
                             <>
                                 <div className="d-flex flex-row w-100">
