@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 
 const API = 'http://10.0.0.227:4000';
@@ -142,19 +143,8 @@ function App() {
             <div className="container-fluid">
                 <div className="d-flex flex-row mb-3">
                     <div className="col-4 d-flex flex-column align-items-start">
-                        <div className="d-flex flex-row w-100">
-                            <header className="App-header flex-grow-1">
-                                Groups
-                            </header>
-                            <div className="d-flex flex-row w-25">
-                                <button
-                                    className="flex-fill"
-                                    onClick={fetchGroups}
-                                >
-                                    Refresh
-                                </button>
-                            </div>
-                        </div>
+                        {/* Volume Groups */}
+                        <VolumeGroupHeader fetchGroups={fetchGroups} />
                         <VolumeGroupList
                             groups={groups}
                             loading={loading}
