@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { API } from './config';
+import { API } from './App';
 
 const VolumeGroupControls = ({ fetchGroups }) => {
     const [newGroupName, setNewGroupName] = useState('');

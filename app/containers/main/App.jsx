@@ -10,11 +10,9 @@ import { API, KEYS, MODIFIERS, WS_API } from './config';
 import './App.css';
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
+import VolumeGroupControls from './VolumeGroupControls';
 
-const promptModifier = async (message, defaultValue) => {
-    const result = await electronPrompt({ title: message, label: message, height: 180, type: 'select', selectOptions: MODIFIERS.reduce((acc, cur) => ({ ...acc, [cur]: cur, }), {}), value: defaultValue });
-    return result || defaultValue;
-}
+export const API = 'http://10.0.0.227:4000';
 
 function App() {
     const [connecting, setConnecting] = useState(true);
@@ -45,31 +43,6 @@ function App() {
         const response = await res.json();
         setRunningPrograms(response);
         console.log('response: ', response);
-    };
-
-    const save = async () => {
-        await fetch(`${API}/api/v1/system`, {
-            method: 'POST',
-            body: JSON.stringify({ action: 'save' }),
-        });
-    };
-
-    const defaultVolume = async () => {
-        await fetch(`${API}/api/v1/system`, {
-            method: 'POST',
-            body: JSON.stringify({ action: 'default_volume' }),
-        });
-        fetchGroups();
-    };
-
-    const renameGroup = async (index) => {
-        const newName = await prompt('Specify a new name', selectedGroup.groupName);
-        await fetch(`${API}/api/v1/groups/${index}`, {
-            method: 'PUT',
-            body: JSON.stringify({ newName }),
-        });
-        fetchGroups();
-        setSelectedGroupName(newName);
     };
 
     const removeGroup = async (index) => {
@@ -216,16 +189,7 @@ function App() {
                             removeGroup={removeGroup}
                             setSelectedGroupName={setSelectedGroupName}
                         />
-                        <div className="d-flex flex-row w-100">
-                            <input
-                                className="flex-grow-1"
-                                value={newGroupName}
-                                onChange={(e) =>
-                                    setNewGroupName(e.target.value)
-                                }
-                            />
-                            <button onClick={addGroup}>Add Group</button>
-                        </div>
+                        <VolumeGroupControls fetchGroups={fetchGroups} />
                     </div>
                     <div className="col-8 d-flex flex-column align-items-start">
                         {/* Volume Group Details */}
