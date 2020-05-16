@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import VolumeGroupList from './VolumeGroupList';
 
 const API = 'http://10.0.0.227:4000';
 
@@ -154,29 +155,12 @@ function App() {
                                 </button>
                             </div>
                         </div>
-
-                        {!groups.length && loading && <p>loading.....</p>}
-                        {groups.map((group, index) => {
-                            return (
-                                <div
-                                    className="d-flex flex-row justify-content-between w-100"
-                                    key={group.groupName}
-                                >
-                                    <p
-                                        onClick={() =>
-                                            setSelectedGroupName(
-                                                group.groupName,
-                                            )
-                                        }
-                                    >
-                                        {group.groupName}
-                                    </p>
-                                    <button onClick={() => removeGroup(index)}>
-                                        Delete
-                                    </button>
-                                </div>
-                            );
-                        })}
+                        <VolumeGroupList
+                            groups={groups}
+                            loading={loading}
+                            removeGroup={removeGroup}
+                            setSelectedGroupName={setSelectedGroupName}
+                        />
                         <div className="d-flex flex-row w-100">
                             <input
                                 className="flex-grow-1"
