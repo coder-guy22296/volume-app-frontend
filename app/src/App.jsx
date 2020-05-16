@@ -21,7 +21,7 @@ function App() {
         setLoading(false);
     };
 
-    const fetchRunningPrograms = async (as) => {
+    const fetchRunningPrograms = async () => {
         const res = await fetch(`${API}/api/v1/system`);
         const response = await res.json();
         setRunningPrograms(response);
@@ -127,7 +127,7 @@ function App() {
     return (
         <div className="App d-flex flex-column">
             <nav className="navbar navbar-light bg-light mb-4">
-                <a className="navbar-brand" href="#">
+                <div className="navbar-brand" href="#">
                     <img
                         src="/docs/4.4/assets/brand/bootstrap-solid.svg"
                         width="30"
@@ -136,7 +136,7 @@ function App() {
                         alt=""
                     />
                     Beta
-                </a>
+                </div>
             </nav>
             <div className="container-fluid">
                 <div className="d-flex flex-row mb-3">
