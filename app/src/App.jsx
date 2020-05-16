@@ -5,7 +5,6 @@ import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
 import { API } from './config';
 
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -152,12 +151,14 @@ function App() {
                                     </header>
                                     <div className="d-flex flex-row w-25">
                                         <button
+                                            type="button"
                                             className="flex-fill"
                                             onClick={volumeUp}
                                         >
                                             +
                                         </button>
                                         <button
+                                            type="button"
                                             className="flex-fill"
                                             onClick={volumeDown}
                                         >
@@ -173,6 +174,7 @@ function App() {
                                         >
                                             <p>{as}</p>
                                             <button
+                                                type="button"
                                                 onClick={() =>
                                                     removeProgram(as)
                                                 }
@@ -190,7 +192,7 @@ function App() {
                                             setNewProgramName(e.target.value)
                                         }
                                     />
-                                    <button onClick={addProgram}>
+                                    <button type="button" onClick={addProgram}>
                                         Add Program
                                     </button>
                                 </div>
@@ -225,7 +227,9 @@ function App() {
                         <header className="App-header flex-fill">
                             Running programs
                         </header>
-                        <button onClick={fetchRunningPrograms}>Reload</button>
+                        <button type="button" onClick={fetchRunningPrograms}>
+                            Reload
+                        </button>
                     </div>
                     {runningPrograms.map((program) => (
                         <p>{program}</p>
