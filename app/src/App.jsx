@@ -3,14 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
+import VolumeGroupControls from './VolumeGroupControls';
 
-const API = 'http://10.0.0.227:4000';
+export const API = 'http://10.0.0.227:4000';
 
 function App() {
     const [loading, setLoading] = useState(false);
     const [groups, setGroups] = useState([]);
     const [runningPrograms, setRunningPrograms] = useState([]);
-    const [newGroupName, setNewGroupName] = useState('');
     const [newProgramName, setNewProgramName] = useState('');
     const [selectedGroupName, setSelectedGroupName] = useState(null);
     const selectedGroup = groups.find((g) => g.groupName === selectedGroupName);
@@ -28,18 +28,6 @@ function App() {
         const response = await res.json();
         setRunningPrograms(response);
         console.log('response: ', response);
-    };
-
-    const addGroup = async () => {
-        await fetch(`${API}/api/v1/groups`, {
-            method: 'POST',
-            // headers: {
-            //     "Content-Type": "application/json"
-            // },
-            body: JSON.stringify({ groupName: newGroupName }),
-        });
-        setNewGroupName('');
-        fetchGroups();
     };
 
     const removeGroup = async (index) => {
@@ -151,16 +139,7 @@ function App() {
                             removeGroup={removeGroup}
                             setSelectedGroupName={setSelectedGroupName}
                         />
-                        <div className="d-flex flex-row w-100">
-                            <input
-                                className="flex-grow-1"
-                                value={newGroupName}
-                                onChange={(e) =>
-                                    setNewGroupName(e.target.value)
-                                }
-                            />
-                            <button onClick={addGroup}>Add Group</button>
-                        </div>
+                        <VolumeGroupControls fetchGroups={fetchGroups} />
                     </div>
                     <div className="col-8 d-flex flex-column align-items-start">
                         {selectedGroup && (
