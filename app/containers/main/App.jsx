@@ -1,19 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import electronPrompt from 'electron-prompt';
-import Modal from 'react-modal';
+import React, { useEffect, useState } from 'react';
 
-import VolumeGroupHeader from './VolumeGroupHeader';
-import VolumeGroupList from './VolumeGroupList';
-import VolumeGroupControls from './VolumeGroupControls';
-import { API, KEYS, MODIFIERS, WS_API } from './config';
-
-import './App.css';
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
 import { API } from './config';
 
-export const API = 'http://10.0.0.227:4000';
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
     const [connecting, setConnecting] = useState(true);
