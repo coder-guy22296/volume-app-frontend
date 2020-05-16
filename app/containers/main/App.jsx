@@ -11,6 +11,7 @@ import './App.css';
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
+import { API } from './config';
 
 export const API = 'http://10.0.0.227:4000';
 
