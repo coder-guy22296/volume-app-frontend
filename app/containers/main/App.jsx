@@ -17,12 +17,6 @@ function App() {
     const selectedGroup = groups.find((g) => g.groupName === selectedGroupName);
     const selectedGroupIndex = groups.indexOf(selectedGroup);
 
-    const [modal, modalState, toggleModal] = useModal();
-
-    const handleModalSubmit = () => {
-
-    }
-
     const fetchGroups = async () => {
         setLoading(true);
         const res = await fetch(`${API}/api/v1/groups`);
@@ -36,6 +30,32 @@ function App() {
         const response = await res.json();
         setRunningPrograms(response);
         console.log('response: ', response);
+    };
+
+    const save = async () => {
+        await fetch(`${API}/api/v1/system`, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'save' }),
+        });
+    };
+
+    const defaultVolume = async () => {
+        await fetch(`${API}/api/v1/system`, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'default_volume' }),
+        });
+        fetchGroups();
+    };
+
+    const renameGroup = async (index) => {
+        const newName = prompt('Specify a new name');
+
+        await fetch(`${API}/api/v1/groups/${index}`, {
+            method: 'PUT',
+            body: JSON.stringify({ newName }),
+        });
+        fetchGroups();
+        setSelectedGroupName(newName);
     };
 
     const removeGroup = async (index) => {
