@@ -14,6 +14,7 @@ function App() {
     const [newProgramName, setNewProgramName] = useState('');
     const [selectedGroupName, setSelectedGroupName] = useState(null);
     const selectedGroup = groups.find((g) => g.groupName === selectedGroupName);
+    const selectedGroupIndex = groups.indexOf(selectedGroup);
 
     const fetchGroups = async () => {
         setLoading(true);
@@ -28,6 +29,32 @@ function App() {
         const response = await res.json();
         setRunningPrograms(response);
         console.log('response: ', response);
+    };
+
+    const save = async () => {
+        await fetch(`${API}/api/v1/system`, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'save' }),
+        });
+    };
+
+    const defaultVolume = async () => {
+        await fetch(`${API}/api/v1/system`, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'default_volume' }),
+        });
+        fetchGroups();
+    };
+
+    const renameGroup = async (index) => {
+        const newName = prompt('Specify a new name');
+
+        await fetch(`${API}/api/v1/groups/${index}`, {
+            method: 'PUT',
+            body: JSON.stringify({ newName }),
+        });
+        fetchGroups();
+        setSelectedGroupName(newName);
     };
 
     const removeGroup = async (index) => {
@@ -146,7 +173,12 @@ function App() {
                         {selectedGroup && (
                             <>
                                 <div className="d-flex flex-row w-100">
-                                    <header className="App-header flex-grow-1">
+                                    <header
+                                        className="App-header flex-grow-1"
+                                        onClick={() =>
+                                            renameGroup(selectedGroupIndex)
+                                        }
+                                    >
                                         {`${selectedGroup.groupName} - ${selectedGroup.volAsPercent}%`}
                                     </header>
                                     <div className="d-flex flex-row w-25">
@@ -235,6 +267,12 @@ function App() {
                         <p>{program}</p>
                     ))}
                 </div>
+                <button type="button" onClick={defaultVolume}>
+                    Default volume
+                </button>
+                <button type="button" onClick={save}>
+                    Save
+                </button>
             </div>
         </div>
     );
