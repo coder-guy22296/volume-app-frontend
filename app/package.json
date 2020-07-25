@@ -4,7 +4,10 @@
   "version": "2.0.0",
   "description": "Volume Control Utility",
   "main": "./main.prod.js",
-  "author": "Can Yildirim",
+  "author": {
+    "name": "Can Yildirim",
+    "email": "canpy30@gmail.com"
+  },
   "scripts": {
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
