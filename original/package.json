@@ -1,0 +1,18 @@
+{
+    "name": "volume-control-utility",
+    "version": "2.0.0",
+    "description": "Volume Control Utility",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "repository": "",
+    "keywords": [],
+    "author": "Can Yildirim",
+    "devDependencies": {
+        "electron": "^7.1.0"
+    },
+    "dependencies": {
+        "electron-winstaller": "^4.0.1"
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "volume-control-utility",
+  "productName": "volumeControlUtility",
+  "version": "2.0.0",
+  "description": "Volume Control Utility",
+  "main": "./main.prod.js",
+  "author": "Can Yildirim",
+  "scripts": {
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
