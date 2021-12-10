@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
-import { API } from './config';
+import { API, WS_API } from './config';
 
 import './App.css';
 
