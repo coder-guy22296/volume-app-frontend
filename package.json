@@ -4,11 +4,13 @@
   "version": "2.0.0",
   "description": "Volume Control Utility",
   "scripts": {
-    "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
+    "build": "concurrently \"yarn build-main\" \"yarn build-renderer\" \"yarn build-backend\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-e2e": "cross-env E2E_BUILD=true yarn build",
     "build-main": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
+    "build-backend": "dotnet build \"../groupVolumeControl(.NET 5.0)/VolumeControlUtility/VolumeControlUtility.csproj\" --configuration Release",
+    "dev-backend": "dotnet run --project \"../groupVolumeControl(.NET 5.0)/VolumeControlUtility/VolumeControlUtility.csproj\" --configuration Debug",
     "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
     "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
     "lint": "cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx",
@@ -62,6 +64,19 @@
       "main.prod.js.map",
       "package.json"
     ],
+    "extraFiles": [
+      {
+        "from": "../groupVolumeControl(.NET 5.0)/VolumeControlUtility/bin/Release/net5.0-windows7.0/",
+        "to": "VolumeControlUtilityServer/",
+        "filter": [
+          "**/*",
+          "!pgmSave.json"
+        ]
+      }
+    ],
+    "nsis": {
+      "include": "configs/win_installer.nsh"
+    },
     "dmg": {
       "contents": [
         {
@@ -80,7 +95,8 @@
       "target": [
         "nsis",
         "msi"
-      ]
+      ],
+      "requestedExecutionLevel": "requireAdministrator"
     },
     "linux": {
       "target": [
@@ -234,13 +250,16 @@
     "@hot-loader/react-dom": "^16.13.0",
     "@reduxjs/toolkit": "^1.4.0",
     "connected-react-router": "^6.6.1",
+    "custom-electron-titlebar": "^3.2.10",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.2",
     "electron-updater": "^4.3.1",
     "history": "^4.7.2",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.12.0",
     "react-hot-loader": "^4.12.21",
+    "react-modal": "^3.14.4",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",

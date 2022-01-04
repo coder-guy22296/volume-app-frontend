@@ -1,11 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import electronPrompt from 'electron-prompt';
+import Modal from 'react-modal';
 
 import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 import VolumeGroupControls from './VolumeGroupControls';
-import { API, WS_API } from './config';
+import { API, KEYS, MODIFIERS, WS_API } from './config';
 
 import './App.css';
+import KeyPressModal from './KeyPressModal';
+
+
+const useModal = () => {
+    const [open, setOpen] = useState(false);
+    const [state, setState] = useState();
+
+    const toggle = useCallback((state) => {
+        setState(state);
+        setOpen((isOpen) => !isOpen);
+    });
+
+    return [open, state, toggle];
+}
+
+const prompt = async (message, defaultValue) => {
+    const result = await electronPrompt({ title: message, label: message, height: 180, value: defaultValue });
+    return result || defaultValue;
+}
+
+const promptKey = async (message, defaultValue) => {
+    const result = await electronPrompt({ title: message, label: message, height: 180, type: 'select', selectOptions: KEYS.reduce((acc, cur) => ({ ...acc, [cur]: cur, }), {}), value: defaultValue });
+    return result || defaultValue;
+}
+
+const promptModifier = async (message, defaultValue) => {
+    const result = await electronPrompt({ title: message, label: message, height: 180, type: 'select', selectOptions: MODIFIERS.reduce((acc, cur) => ({ ...acc, [cur]: cur, }), {}), value: defaultValue });
+    return result || defaultValue;
+}
 
 function App() {
     const [connecting, setConnecting] = useState(true);
@@ -16,6 +47,12 @@ function App() {
     const [selectedGroupName, setSelectedGroupName] = useState(null);
     const selectedGroup = groups.find((g) => g.groupName === selectedGroupName);
     const selectedGroupIndex = groups.indexOf(selectedGroup);
+
+    const [modal, modalState, toggleModal] = useModal();
+
+    const handleModalSubmit = () => {
+
+    }
 
     const fetchGroups = async () => {
         setLoading(true);
@@ -48,8 +85,7 @@ function App() {
     };
 
     const renameGroup = async (index) => {
-        const newName = prompt('Specify a new name');
-
+        const newName = await prompt('Specify a new name', selectedGroup.groupName);
         await fetch(`${API}/api/v1/groups/${index}`, {
             method: 'PUT',
             body: JSON.stringify({ newName }),
