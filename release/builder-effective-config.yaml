@@ -1,0 +1,46 @@
+directories:
+  output: release
+  buildResources: resources
+productName: volumeControlUtility
+appId: ninja.risingstorm.volumecontrolutility
+files:
+  - filter:
+      - dist/
+      - node_modules/
+      - app.html
+      - main.prod.js
+      - main.prod.js.map
+      - package.json
+extraFiles:
+  - from: ../groupVolumeControl(.NET 5.0)/VolumeControlUtility/bin/Release/net5.0-windows7.0/
+    to: VolumeControlUtilityServer/
+    filter:
+      - '**/*'
+      - '!pgmSave.json'
+nsis:
+  include: configs/win_installer.nsh
+dmg:
+  contents:
+    - x: 130
+      'y': 220
+    - x: 410
+      'y': 220
+      type: link
+      path: /Applications
+win:
+  target:
+    - nsis
+    - msi
+  requestedExecutionLevel: requireAdministrator
+linux:
+  target:
+    - deb
+    - rpm
+    - AppImage
+  category: Development
+publish:
+  provider: github
+  owner: electron-react-boilerplate
+  repo: electron-react-boilerplate
+  private: false
+electronVersion: 8.4.1
