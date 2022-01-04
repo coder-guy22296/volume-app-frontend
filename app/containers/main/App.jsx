@@ -8,30 +8,7 @@ import VolumeGroupControls from './VolumeGroupControls';
 import { API, KEYS, MODIFIERS, WS_API } from './config';
 
 import './App.css';
-import KeyPressModal from './KeyPressModal';
-
-
-const useModal = () => {
-    const [open, setOpen] = useState(false);
-    const [state, setState] = useState();
-
-    const toggle = useCallback((state) => {
-        setState(state);
-        setOpen((isOpen) => !isOpen);
-    });
-
-    return [open, state, toggle];
-}
-
-const prompt = async (message, defaultValue) => {
-    const result = await electronPrompt({ title: message, label: message, height: 180, value: defaultValue });
-    return result || defaultValue;
-}
-
-const promptKey = async (message, defaultValue) => {
-    const result = await electronPrompt({ title: message, label: message, height: 180, type: 'select', selectOptions: KEYS.reduce((acc, cur) => ({ ...acc, [cur]: cur, }), {}), value: defaultValue });
-    return result || defaultValue;
-}
+import VolumeGroupList from './VolumeGroupList';
 
 const promptModifier = async (message, defaultValue) => {
     const result = await electronPrompt({ title: message, label: message, height: 180, type: 'select', selectOptions: MODIFIERS.reduce((acc, cur) => ({ ...acc, [cur]: cur, }), {}), value: defaultValue });
@@ -230,15 +207,35 @@ function App() {
             <div className="container-fluid">
                 <div className="d-flex flex-row mb-3">
                     <div className="col-4 d-flex flex-column align-items-start">
-                        {/* Volume Groups */}
-                        <VolumeGroupHeader fetchGroups={fetchGroups} />
+                        <div className="d-flex flex-row w-100">
+                            <header className="App-header flex-grow-1">
+                                Groups
+                            </header>
+                            <div className="d-flex flex-row w-25">
+                                <button
+                                    className="flex-fill"
+                                    onClick={fetchGroups}
+                                >
+                                    Refresh
+                                </button>
+                            </div>
+                        </div>
                         <VolumeGroupList
                             groups={groups}
                             loading={loading}
                             removeGroup={removeGroup}
                             setSelectedGroupName={setSelectedGroupName}
                         />
-                        <VolumeGroupControls fetchGroups={fetchGroups} />
+                        <div className="d-flex flex-row w-100">
+                            <input
+                                className="flex-grow-1"
+                                value={newGroupName}
+                                onChange={(e) =>
+                                    setNewGroupName(e.target.value)
+                                }
+                            />
+                            <button onClick={addGroup}>Add Group</button>
+                        </div>
                     </div>
                     <div className="col-8 d-flex flex-column align-items-start">
                         {/* Volume Group Details */}
