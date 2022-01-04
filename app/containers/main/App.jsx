@@ -8,6 +8,7 @@ import VolumeGroupControls from './VolumeGroupControls';
 import { API, KEYS, MODIFIERS, WS_API } from './config';
 
 import './App.css';
+import VolumeGroupHeader from './VolumeGroupHeader';
 import VolumeGroupList from './VolumeGroupList';
 
 const promptModifier = async (message, defaultValue) => {
@@ -207,19 +208,8 @@ function App() {
             <div className="container-fluid">
                 <div className="d-flex flex-row mb-3">
                     <div className="col-4 d-flex flex-column align-items-start">
-                        <div className="d-flex flex-row w-100">
-                            <header className="App-header flex-grow-1">
-                                Groups
-                            </header>
-                            <div className="d-flex flex-row w-25">
-                                <button
-                                    className="flex-fill"
-                                    onClick={fetchGroups}
-                                >
-                                    Refresh
-                                </button>
-                            </div>
-                        </div>
+                        {/* Volume Groups */}
+                        <VolumeGroupHeader fetchGroups={fetchGroups} />
                         <VolumeGroupList
                             groups={groups}
                             loading={loading}
